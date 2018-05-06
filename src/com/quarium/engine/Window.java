@@ -4,14 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Window {
   private JFrame frame;
-  private java.awt.image.BufferedImage image;
+  private BufferedImage image;
   private Canvas canvas;
-  private java.awt.image.BufferStrategy bs;
+  private BufferStrategy bs;
   private Graphics graphics;
 
   /**
@@ -41,8 +42,20 @@ public class Window {
     graphics = bs.getDrawGraphics();
   }
 
+  public BufferedImage getImage() {
+    return image;
+  }
+
+  public Canvas getCanvas() {
+    return canvas;
+  }
+
   public void update() {
     graphics.drawImage(image, 0,0,canvas.getWidth(), canvas.getHeight(), null);
     bs.show();
+  }
+
+  public JFrame getFrame() {
+    return frame;
   }
 }

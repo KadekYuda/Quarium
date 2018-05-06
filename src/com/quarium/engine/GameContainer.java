@@ -3,6 +3,10 @@ package com.quarium.engine;
 public class GameContainer implements  Runnable {
   private Thread thread;
   private Window window;
+  private Renderer renderer;
+  private Input input;
+  private AbstractGame game;
+
   private boolean running = false;
   private static final double UPDATE_CAP = 1.0 / 60.0;
   private int width = 640;
@@ -10,13 +14,18 @@ public class GameContainer implements  Runnable {
   private float scale = 1f;
   private String title = "Quarium";
 
-  public GameContainer() {
-
+  public GameContainer(AbstractGame game) {
+    this.game = game;
   }
 
+  /**
+   * Starts the game thread with the game.
+   */
   public void start() {
     window = new Window(this);
+    renderer = new Renderer(this);
     thread = new Thread(this);
+    input = new Input(this);
     thread.run();
   }
 
@@ -45,7 +54,11 @@ public class GameContainer implements  Runnable {
       while (unprocessedTime >= UPDATE_CAP) {
         unprocessedTime -= UPDATE_CAP;
         render = true;
-        //TODO: update game
+
+        game.update(this, (float)UPDATE_CAP);
+
+        input.update();
+
         if (frameTime >= 1.0) {
           frameTime = 0;
           fps = frames;
@@ -54,7 +67,8 @@ public class GameContainer implements  Runnable {
         }
       }
       if (render) {
-        //TODO: render game
+        renderer.clear();
+        game.render(this, renderer);
         window.update();
         frames++;
       } else {
@@ -88,8 +102,11 @@ public class GameContainer implements  Runnable {
     return title;
   }
 
-  public static void main(String[] args) {
-    GameContainer gc = new GameContainer();
-    gc.start();
+  public Window getWindow() {
+    return window;
+  }
+
+  public Input getInput() {
+    return input;
   }
 }
