@@ -1,7 +1,7 @@
 package com.quarium.engine;
 
-public abstract class AbstractGame {
-  public abstract void update(GameContainer gc, float dt);
+public interface AbstractGame {
+  void update(GameContainer gc, float dt);
 
-  public abstract void render(GameContainer gc, Renderer r);
+  void render(GameContainer gc, Renderer r);
 }

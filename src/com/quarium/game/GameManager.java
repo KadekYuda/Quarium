@@ -7,7 +7,7 @@ import com.quarium.engine.gfx.Image;
 
 import java.awt.event.KeyEvent;
 
-public class GameManager extends AbstractGame {
+public class GameManager implements AbstractGame {
 
   private Image background;
 

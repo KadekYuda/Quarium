@@ -18,7 +18,7 @@ public interface Fish {
   void chaseFood(Item food);
 
   /**
-   * Update fish's position according to the border
+   * Update fish's position according to the border.
    * @param hsize Abyss border
    * @param vsize Ordinate border
    */

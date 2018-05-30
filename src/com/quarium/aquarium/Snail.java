@@ -2,9 +2,25 @@ package com.quarium.aquarium;
 
 public class Snail extends Item {
 
-  private static final double SNAIL_SPEED = 3;
+  public static final double SNAIL_SPEED = 3;
   private int accValue;
   private boolean spriteFacing;
+
+  public int getAccValue() {
+    return accValue;
+  }
+
+  public void setAccValue(int accValue) {
+    this.accValue = accValue;
+  }
+
+  public boolean getSpriteFacing() {
+    return spriteFacing;
+  }
+
+  public void setSpriteFacing(boolean spriteFacing) {
+    this.spriteFacing = spriteFacing;
+  }
 
   /**
    * Constructor for snail in position (x,y).

@@ -1,6 +1,6 @@
 package com.quarium.util;
 
-class CustomList<T> {
+public class CustomList<T> {
   private Node<T> head;
   private final int linkedListEmpty = 0;
   private final int linkedListNotFound = 1;

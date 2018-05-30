@@ -1,52 +1,39 @@
 package com.quarium.aquarium;
 
-import java.lang.Double;
+import java.lang.Math;
 import java.util.Random;
 
-public class Guppy extends Item implements Fish {
+public class Piranha extends Item implements Fish {
   private boolean isFull;
-  private int growthStage;
   private boolean spriteFacing;
-  private int remainingFoodToLvUp;
   private int coin;
   private double timehungry;
   private double timeprevmove;
-  private double lastGenerateCoin;
 
-  public static final double GUPPY_SHUNGRY = 3;
-  public static final double GUPPY_SNORMAL = 1;
-  public static final int GUPPY_FOOD_TO_LV_2 = 3;
-  public static final int GUPPY_FOOD_TO_LV_3 = 5;
-  public static final int GUPPY_COIN_LV_1 = 20;
-  public static final int GUPPY_COIN_LV_2 = 30;
-  public static final int GUPPY_COIN_LV_3 = 50;
-  public static final double GUPPY_HUNGRY = 8;
-  public static final double GUPPY_DEAD = 20;
-  public static final double GUPPY_COIN = 12;
-  public static final double GUPPY_RADIUS = 5;
-  public static final int GUPPY_CHANGE_MOVE = 4;
+  public static double PIRANHA_SHUNGRY = 4;
+  public static double PIRANHA_SNORMAL = 2;
+  public static double PIRANHA_TIME_INTERVAL_HUNGRY = 8;
+  public static double PIRANHA_TIME_INTERVAL_DEATH = 16;
+  public static double PIRANHA_RADIUS_TO_EAT = 5;
 
   /**
-   * Constructor of Guppy at position (x,y) with initialization of time indicators.
-   * @param x Abyss position of Guppy
-   * @param y Ordinate position of Guppy
-   * @param t Time of Guppy's initialization
+   * Acts like a piranha. Eats Guppy.
+   * @param x Axis of Piranha location
+   * @param y Ordinate of Piranha location
+   * @param t Time of Piranha's initialization
    */
-  public Guppy(double x, double y, double t) {
-    super(x,y,GUPPY_SNORMAL / 2, GUPPY_SNORMAL / 2);
+  public Piranha(double x, double y, double t) {
+    super(x,y,PIRANHA_SNORMAL / 2,PIRANHA_SNORMAL / 2);
     isFull = true;
-    growthStage = 1;
-    spriteFacing = true;// true menghadap ke kanan, false menghadap ke kiri
-    remainingFoodToLvUp = GUPPY_FOOD_TO_LV_2;
-    coin = GUPPY_COIN_LV_1;
+    spriteFacing = true;
+    coin = 200;
     timehungry = t;
     timeprevmove = t;
-    lastGenerateCoin = t;
   }
 
   @Override
   public void setHungry() {
-    isFull = false;
+    setFull(false);
   }
 
   @Override
@@ -85,9 +72,9 @@ public class Guppy extends Item implements Fish {
     double speed;
 
     if (isFull()) {
-      speed = GUPPY_SNORMAL;
+      speed = PIRANHA_SNORMAL;
     } else {
-      speed = GUPPY_SHUNGRY;
+      speed = PIRANHA_SHUNGRY;
     }
     if (getXpos() < hsize && getXpos() > 0) {
       setXpos(getXpos() + speed * getXspeed());
@@ -111,30 +98,8 @@ public class Guppy extends Item implements Fish {
     }
   }
 
-  /**
-   * To tell the Guppy to eat the food.
-   * @param f The food the Guppy is going to eat.
-   */
-  public void eat(Food f) {
+  public void eat(Guppy g) {
     isFull = true;
-    remainingFoodToLvUp--;
-    grow();
-  }
-
-  /**
-   * Check Guppy's growth.
-   */
-  public void grow() {
-    if (remainingFoodToLvUp == 0) {
-      growthStage++;
-      if (growthStage == 2) {
-        remainingFoodToLvUp = GUPPY_FOOD_TO_LV_3;
-        coin = GUPPY_COIN_LV_2;
-      } else if (growthStage == 3) {
-        remainingFoodToLvUp = -1;
-        coin = GUPPY_COIN_LV_3;
-      }
-    }
   }
 
   public boolean isFull() {
@@ -145,28 +110,12 @@ public class Guppy extends Item implements Fish {
     isFull = full;
   }
 
-  public int getGrowthStage() {
-    return growthStage;
-  }
-
-  public void setGrowthStage(int growthStage) {
-    this.growthStage = growthStage;
-  }
-
   public boolean isSpriteFacing() {
     return spriteFacing;
   }
 
   public void setSpriteFacing(boolean spriteFacing) {
     this.spriteFacing = spriteFacing;
-  }
-
-  public int getRemainingFoodToLvUp() {
-    return remainingFoodToLvUp;
-  }
-
-  public void setRemainingFoodToLvUp(int remainingFoodToLvUp) {
-    this.remainingFoodToLvUp = remainingFoodToLvUp;
   }
 
   public int getCoin() {
@@ -191,13 +140,5 @@ public class Guppy extends Item implements Fish {
 
   public void setTimeprevmove(double timeprevmove) {
     this.timeprevmove = timeprevmove;
-  }
-
-  public double getLastGenerateCoin() {
-    return lastGenerateCoin;
-  }
-
-  public void setLastGenerateCoin(double lastGenerateCoin) {
-    this.lastGenerateCoin = lastGenerateCoin;
   }
 }
